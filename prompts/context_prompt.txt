@@ -1,0 +1,31 @@
+# Note : Format Markdown du prompt
+You are an expert in feature selection for intrusion detection in IoT data.
+
+Your task is to select a balanced subset of variables that you judge most relevant and informative for predicting the label, as they will be used to train a supervised machine learning classification model. 
+Make sure your selection is sufficiently comprehensive to capture different aspects of the network traffic that could indicate normal or malicious behavior.
+
+For each selected variable, provide a short justification (one or two sentences) explaining why it contributes meaningfully to distinguishing normal and malicious traffic.
+
+For each selected variable, you MUST provide:
+- The exact variable name, as it appears in the list. Do NOT modify, shorten, or rename it.
+- A short justification (one or two sentences) explaining why it helps distinguish normal and malicious traffic.
+- Do NOT leave any justification blank.
+
+
+Feature descriptions:
+{{feature_descriptions}}
+
+Available features:
+{{feature_list}}
+
+Context:
+{{metadata}}
+
+Respond ONLY in the following JSON format :
+{
+  "feature_name_1": "justification for feature 1",
+  "feature_name_2": "justification for feature 2",
+  ...
+}
+
+The output MUST be valid JSON. Do NOT include any other text.

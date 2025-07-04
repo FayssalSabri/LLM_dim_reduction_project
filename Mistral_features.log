@@ -1,0 +1,386 @@
+========================================== Log de la pipeline ==========================================
+LLM utilisé: Mistral
+Prompt utilisé:
+You are an expert in feature selection for intrusion detection in IoT data.
+
+Your task is to select a balanced subset of variables that you judge most relevant and informative for predicting the label, as they will be used to train a supervised machine learning classification model. 
+Make sure your selection is sufficiently comprehensive (around 10â€“18 variables) to capture different aspects of the network traffic that could indicate normal or malicious behavior.
+
+For each selected variable, provide a short justification (one or two sentences) explaining why it contributes meaningfully to distinguishing normal and malicious traffic.
+
+Available features :
+The CICFlowMeter is an open source tool that generates Biflows from pcap files, and extracts features from these flows.
+
+
+
+NOTE: TCP flows are usually terminated upon connection teardown (by FIN packet) while UDP flows are terminated by a flow timeout. The flow timeout value can be assigned arbitrarily by the individual scheme e.g., 600 seconds for both TCP and UDP.
+
+--------------------------------------------------------------
+List of extracted features and descriptions:
+Feature Name				Description
+Src IP                  The IP address of the sender in the network traffic
+Flow duration			Duration of the flow in Microsecond
+total Fwd Packet		Total packets in the forward direction
+total Bwd packets		Total packets in the backward direction
+total Length of Fwd Packet	Total size of packet in forward direction
+total Length of Bwd Packet	Total size of packet in backward direction
+Fwd Packet Length Min 		Minimum size of packet in forward direction
+Fwd Packet Length Max 		Maximum size of packet in forward direction
+Fwd Packet Length Mean		Mean size of packet in forward direction
+Fwd Packet Length Std		Standard deviation size of packet in forward direction
+Bwd Packet Length Min		Minimum size of packet in backward direction
+Bwd Packet Length Max		Maximum size of packet in backward direction
+Bwd Packet Length Mean		Mean size of packet in backward direction
+Bwd Packet Length Std		Standard deviation size of packet in backward direction
+Flow Bytes/s			Number of flow bytes per second
+Flow Packets/s			Number of flow packets per second 
+Flow IAT Mean			Mean time between two packets sent in the flow
+Flow IAT Std			Standard deviation time between two packets sent in the flow
+Flow IAT Max			Maximum time between two packets sent in the flow
+Flow IAT Min			Minimum time between two packets sent in the flow
+Fwd IAT Min			Minimum time between two packets sent in the forward direction
+Fwd IAT Max			Maximum time between two packets sent in the forward direction
+Fwd IAT Mean			Mean time between two packets sent in the forward direction
+Fwd IAT Std			Standard deviation time between two packets sent in the forward direction
+Fwd IAT Total   		Total time between two packets sent in the forward direction
+Bwd IAT Min			Minimum time between two packets sent in the backward direction
+Bwd IAT Max			Maximum time between two packets sent in the backward direction
+Bwd IAT Mean			Mean time between two packets sent in the backward direction
+Bwd IAT Std			Standard deviation time between two packets sent in the backward direction
+Bwd IAT Total			Total time between two packets sent in the backward direction
+Fwd PSH flags			Number of times the PSH flag was set in packets travelling in the forward direction (0 for UDP)
+Bwd PSH Flags			Number of times the PSH flag was set in packets travelling in the backward direction (0 for UDP)
+Fwd URG Flags			Number of times the URG flag was set in packets travelling in the forward direction (0 for UDP)
+Bwd URG Flags			Number of times the URG flag was set in packets travelling in the backward direction (0 for UDP)
+Fwd Header Length		Total bytes used for headers in the forward direction
+Bwd Header Length		Total bytes used for headers in the backward direction
+FWD Packets/s			Number of forward packets per second
+Bwd Packets/s			Number of backward packets per second
+Packet Length Min 		Minimum length of a packet
+Packet Length Max		Maximum length of a packet
+Packet Length Mean 		Mean length of a packet
+Packet Length Std		Standard deviation length of a packet
+Packet Length Variance  	Variance length of a packet
+FIN Flag Count 			Number of packets with FIN
+SYN Flag Count 			Number of packets with SYN
+RST Flag Count 			Number of packets with RST
+PSH Flag Count 			Number of packets with PUSH
+ACK Flag Count 			Number of packets with ACK
+URG Flag Count 			Number of packets with URG
+CWR Flag Count 			Number of packets with CWR
+ECE Flag Count 			Number of packets with ECE
+down/Up Ratio			Download and upload ratio
+Average Packet Size 		Average size of packet
+Fwd Segment Size Avg 		Average size observed in the forward direction
+Bwd Segment Size Avg 		Average size observed in the backward direction
+Fwd Bytes/Bulk Avg		Average number of bytes bulk rate in the forward direction
+Fwd Packet/Bulk Avg		Average number of packets bulk rate in the forward direction
+Fwd Bulk Rate Avg 		Average number of bulk rate in the forward direction
+Bwd Bytes/Bulk Avg		Average number of bytes bulk rate in the backward direction
+Bwd Packet/Bulk Avg 		Average number of packets bulk rate in the backward direction
+Bwd Bulk Rate Avg		Average number of bulk rate in the backward direction
+Subflow Fwd Packets		The average number of packets in a sub flow in the forward direction
+Subflow Fwd Bytes		The average number of bytes in a sub flow in the forward direction
+Subflow Bwd Packets		The average number of packets in a sub flow in the backward direction
+Subflow Bwd Bytes		The average number of bytes in a sub flow in the backward direction
+Fwd Init Win bytes		The total number of bytes sent in initial window in the forward direction
+Bwd Init Win bytes		The total number of bytes sent in initial window in the backward direction
+Fwd Act Data Pkts		Count of packets with at least 1 byte of TCP data payload in the forward direction
+Fwd Seg Size Min		Minimum segment size observed in the forward direction
+Active Min			Minimum time a flow was active before becoming idle
+Active Mean			Mean time a flow was active before becoming idle
+Active Max			Maximum time a flow was active before becoming idle
+Active Std			Standard deviation time a flow was active before becoming idle
+Idle Min			Minimum time a flow was idle before becoming active
+Idle Mean			Mean time a flow was idle before becoming active
+Idle Max			Maximum time a flow was idle before becoming active
+Idle Std			Standard deviation time a flow was idle before becoming active
+
+--------------------------------------------------------------------------------------
+
+
+
+
+
+
+Respond ONLY in the following JSON format:
+
+{
+  "feature_name_1": "justification for feature 1",
+  "feature_name_2": "justification for feature 2",
+  ...
+}
+
+The output MUST be valid JSON. Do NOT include any other text.
+
+
+Réponse brute:
+ {
+      "Src IP": "IP address of the sender can indicate the source of the traffic, which is crucial in distinguishing between normal and malicious traffic.",
+      "Flow duration": "Duration of the flow provides insights into the length of interaction, helping to identify anomalies that might suggest malicious activity.",
+      "total Fwd Packet": "Total packets in the forward direction can provide information on data volume sent, which could be indicative of normal or abnormal traffic patterns.",
+      "total Bwd packets": "Total packets in the backward direction give insights into data volume received, another important factor in distinguishing between normal and malicious traffic.",
+      "Fwd Packet Length Mean": "Mean packet size in the forward direction can help identify unusual data sizes that may indicate potential attacks.",
+      "Flow Bytes/s": "Number of flow bytes per second can be used to analyze the data transfer rate, which is significant in detecting abnormal traffic patterns.",
+      "Flow Packets/s": "Number of flow packets per second helps assess the packet rate, providing another dimension for anomaly detection.",
+      "Flow IAT Mean": "Mean time between two packets sent in the flow can help identify unusual intervals that might indicate malicious activity.",
+      "Fwd PSH flags": "Count of packets with PSH flag set in forward direction can signal the presence of important data, helping distinguish normal from abnormal traffic.",
+      "Fwd Header Length": "Total bytes used for headers in the forward direction can provide insights into unusual header sizes that may indicate potential attacks.",
+      "FIN Flag Count": "Number of packets with FIN flag indicates connection teardown, which can be important in detecting anomalous connection patterns."
+   }
+
+Temps d'inférence: 284.6951732635498 secondes
+
+Features selectionnés:
+['Src IP', 'Flow duration', 'total Fwd Packet', 'total Bwd packets', 'Fwd Packet Length Mean', 'Flow Bytes/s', 'Flow Packets/s', 'Flow IAT Mean', 'Fwd PSH flags', 'Fwd Header Length', 'FIN Flag Count']
+========================================== Classification Results with Selected Features ==========================================
+Nbr of Selected Features with LLM: 11
+Performance with all features:
+Accuracy: 0.879129734085415
+F1 Score: 0.879151121264883
+ROC AUC: 0.9690994719617243
+
+Performance with selected features:
+Accuracy: 0.9222401289282837
+F1 Score: 0.9222370099638193
+ROC AUC: 0.9863803299295554
+
+========================================== Log de la pipeline ==========================================
+LLM utilisé: Mistral
+Prompt utilisé:
+You are an expert in feature selection for intrusion detection in IoT data.
+
+Your task is to select a balanced subset of variables that you judge most relevant and informative for predicting the label, as they will be used to train a supervised machine learning classification model. 
+Make sure your selection is sufficiently comprehensive (around 10â€“18 variables) to capture different aspects of the network traffic that could indicate normal or malicious behavior.
+
+For each selected variable, provide a short justification (one or two sentences) explaining why it contributes meaningfully to distinguishing normal and malicious traffic.
+
+For each selected variable, you MUST provide:
+- The exact variable name, as it appears in the list. Do NOT modify, shorten, or rename it.
+- A short justification (one or two sentences) explaining why it helps distinguish normal and malicious traffic.
+- Do NOT leave any justification blank.
+
+
+Feature descriptions:
+The CICFlowMeter is an open source tool that generates Biflows from pcap files, and extracts features from these flows.
+
+
+
+NOTE: TCP flows are usually terminated upon connection teardown (by FIN packet) while UDP flows are terminated by a flow timeout. The flow timeout value can be assigned arbitrarily by the individual scheme e.g., 600 seconds for both TCP and UDP.
+
+--------------------------------------------------------------
+List of extracted features and descriptions:
+Feature Name				Description
+Src IP                  The IP address of the sender in the network traffic
+Flow duration			Duration of the flow in Microsecond
+total Fwd Packet		Total packets in the forward direction
+total Bwd packets		Total packets in the backward direction
+total Length of Fwd Packet	Total size of packet in forward direction
+total Length of Bwd Packet	Total size of packet in backward direction
+Fwd Packet Length Min 		Minimum size of packet in forward direction
+Fwd Packet Length Max 		Maximum size of packet in forward direction
+Fwd Packet Length Mean		Mean size of packet in forward direction
+Fwd Packet Length Std		Standard deviation size of packet in forward direction
+Bwd Packet Length Min		Minimum size of packet in backward direction
+Bwd Packet Length Max		Maximum size of packet in backward direction
+Bwd Packet Length Mean		Mean size of packet in backward direction
+Bwd Packet Length Std		Standard deviation size of packet in backward direction
+Flow Bytes/s			Number of flow bytes per second
+Flow Packets/s			Number of flow packets per second 
+Flow IAT Mean			Mean time between two packets sent in the flow
+Flow IAT Std			Standard deviation time between two packets sent in the flow
+Flow IAT Max			Maximum time between two packets sent in the flow
+Flow IAT Min			Minimum time between two packets sent in the flow
+Fwd IAT Min			Minimum time between two packets sent in the forward direction
+Fwd IAT Max			Maximum time between two packets sent in the forward direction
+Fwd IAT Mean			Mean time between two packets sent in the forward direction
+Fwd IAT Std			Standard deviation time between two packets sent in the forward direction
+Fwd IAT Total   		Total time between two packets sent in the forward direction
+Bwd IAT Min			Minimum time between two packets sent in the backward direction
+Bwd IAT Max			Maximum time between two packets sent in the backward direction
+Bwd IAT Mean			Mean time between two packets sent in the backward direction
+Bwd IAT Std			Standard deviation time between two packets sent in the backward direction
+Bwd IAT Total			Total time between two packets sent in the backward direction
+Fwd PSH flags			Number of times the PSH flag was set in packets travelling in the forward direction (0 for UDP)
+Bwd PSH Flags			Number of times the PSH flag was set in packets travelling in the backward direction (0 for UDP)
+Fwd URG Flags			Number of times the URG flag was set in packets travelling in the forward direction (0 for UDP)
+Bwd URG Flags			Number of times the URG flag was set in packets travelling in the backward direction (0 for UDP)
+Fwd Header Length		Total bytes used for headers in the forward direction
+Bwd Header Length		Total bytes used for headers in the backward direction
+FWD Packets/s			Number of forward packets per second
+Bwd Packets/s			Number of backward packets per second
+Packet Length Min 		Minimum length of a packet
+Packet Length Max		Maximum length of a packet
+Packet Length Mean 		Mean length of a packet
+Packet Length Std		Standard deviation length of a packet
+Packet Length Variance  	Variance length of a packet
+FIN Flag Count 			Number of packets with FIN
+SYN Flag Count 			Number of packets with SYN
+RST Flag Count 			Number of packets with RST
+PSH Flag Count 			Number of packets with PUSH
+ACK Flag Count 			Number of packets with ACK
+URG Flag Count 			Number of packets with URG
+CWR Flag Count 			Number of packets with CWR
+ECE Flag Count 			Number of packets with ECE
+down/Up Ratio			Download and upload ratio
+Average Packet Size 		Average size of packet
+Fwd Segment Size Avg 		Average size observed in the forward direction
+Bwd Segment Size Avg 		Average size observed in the backward direction
+Fwd Bytes/Bulk Avg		Average number of bytes bulk rate in the forward direction
+Fwd Packet/Bulk Avg		Average number of packets bulk rate in the forward direction
+Fwd Bulk Rate Avg 		Average number of bulk rate in the forward direction
+Bwd Bytes/Bulk Avg		Average number of bytes bulk rate in the backward direction
+Bwd Packet/Bulk Avg 		Average number of packets bulk rate in the backward direction
+Bwd Bulk Rate Avg		Average number of bulk rate in the backward direction
+Subflow Fwd Packets		The average number of packets in a sub flow in the forward direction
+Subflow Fwd Bytes		The average number of bytes in a sub flow in the forward direction
+Subflow Bwd Packets		The average number of packets in a sub flow in the backward direction
+Subflow Bwd Bytes		The average number of bytes in a sub flow in the backward direction
+Fwd Init Win bytes		The total number of bytes sent in initial window in the forward direction
+Bwd Init Win bytes		The total number of bytes sent in initial window in the backward direction
+Fwd Act Data Pkts		Count of packets with at least 1 byte of TCP data payload in the forward direction
+Fwd Seg Size Min		Minimum segment size observed in the forward direction
+Active Min			Minimum time a flow was active before becoming idle
+Active Mean			Mean time a flow was active before becoming idle
+Active Max			Maximum time a flow was active before becoming idle
+Active Std			Standard deviation time a flow was active before becoming idle
+Idle Min			Minimum time a flow was idle before becoming active
+Idle Mean			Mean time a flow was idle before becoming active
+Idle Max			Maximum time a flow was idle before becoming active
+Idle Std			Standard deviation time a flow was idle before becoming active
+
+--------------------------------------------------------------------------------------
+
+
+
+
+
+Available features:
+- Flow ID
+- Src IP
+- Src Port
+- Dst IP
+- Dst Port
+- Protocol
+- Timestamp
+- Flow Duration
+- Total Fwd Packet
+- Total Bwd packets
+- Total Length of Fwd Packet
+- Total Length of Bwd Packet
+- Fwd Packet Length Max
+- Fwd Packet Length Min
+- Fwd Packet Length Mean
+- Fwd Packet Length Std
+- Bwd Packet Length Max
+- Bwd Packet Length Min
+- Bwd Packet Length Mean
+- Bwd Packet Length Std
+- Flow Bytes/s
+- Flow Packets/s
+- Flow IAT Mean
+- Flow IAT Std
+- Flow IAT Max
+- Flow IAT Min
+- Fwd IAT Total
+- Fwd IAT Mean
+- Fwd IAT Std
+- Fwd IAT Max
+- Fwd IAT Min
+- Bwd IAT Total
+- Bwd IAT Mean
+- Bwd IAT Std
+- Bwd IAT Max
+- Bwd IAT Min
+- Fwd PSH Flags
+- Bwd PSH Flags
+- Fwd URG Flags
+- Bwd URG Flags
+- Fwd Header Length
+- Bwd Header Length
+- Fwd Packets/s
+- Bwd Packets/s
+- Packet Length Min
+- Packet Length Max
+- Packet Length Mean
+- Packet Length Std
+- Packet Length Variance
+- FIN Flag Count
+- SYN Flag Count
+- RST Flag Count
+- PSH Flag Count
+- ACK Flag Count
+- URG Flag Count
+- CWR Flag Count
+- ECE Flag Count
+- Down/Up Ratio
+- Average Packet Size
+- Fwd Segment Size Avg
+- Bwd Segment Size Avg
+- Fwd Bytes/Bulk Avg
+- Fwd Packet/Bulk Avg
+- Fwd Bulk Rate Avg
+- Bwd Bytes/Bulk Avg
+- Bwd Packet/Bulk Avg
+- Bwd Bulk Rate Avg
+- Subflow Fwd Packets
+- Subflow Fwd Bytes
+- Subflow Bwd Packets
+- Subflow Bwd Bytes
+- FWD Init Win Bytes
+- Bwd Init Win Bytes
+- Fwd Act Data Pkts
+- Fwd Seg Size Min
+- Active Mean
+- Active Std
+- Active Max
+- Active Min
+- Idle Mean
+- Idle Std
+- Idle Max
+- Idle Min
+- Label
+
+Context:
+Flow ID (type: object), missing=0, unique=11276, mean=N/A, std=N/A, min=N/A, max=N/A, /nSrc IP (type: object), missing=0, unique=322, mean=N/A, std=N/A, min=N/A, max=N/A, /nSrc Port (type: int64), missing=0, unique=7723, mean=35551.46285253827, std=20146.628845371033, min=0.0, max=65503.0, /nDst IP (type: object), missing=0, unique=738, mean=N/A, std=N/A, min=N/A, max=N/A, /nDst Port (type: int64), missing=0, unique=1580, mean=11184.526833199034, std=18337.842017363215, min=0.0, max=65444.0, /nProtocol (type: int64), missing=0, unique=3, mean=13.434488315874296, std=5.356131891919963, min=0.0, max=17.0, /nTimestamp (type: object), missing=0, unique=5332, mean=N/A, std=N/A, min=N/A, max=N/A, /nFlow Duration (type: int64), missing=0, unique=11960, mean=14348044.324576953, std=31286509.49260348, min=0.0, max=119999976.0, /nTotal Fwd Packet (type: int64), missing=0, unique=177, mean=270.2582594681708, std=4743.267542225971, min=1.0, max=161740.0, /nTotal Bwd packets (type: int64), missing=0, unique=113, mean=5.45423045930701, std=87.18527410372309, min=0.0, max=6213.0, /nTotal Length of Fwd Packet (type: float64), missing=0, unique=864, mean=2049.6929089443997, std=58566.46408650932, min=0.0, max=3162432.0, /nTotal Length of Bwd Packet (type: float64), missing=0, unique=762, mean=4454.451974214343, std=240472.53768120936, min=0.0, max=19236027.0, /nFwd Packet Length Max (type: float64), missing=0, unique=403, mean=121.38896051571314, std=535.0571833912305, min=0.0, max=21890.0, /nFwd Packet Length Min (type: float64), missing=0, unique=178, mean=43.65551974214343, std=91.70974648686389, min=0.0, max=1729.0, /nFwd Packet Length Mean (type: float64), missing=0, unique=922, mean=61.45940358196939, std=137.01310677149542, min=0.0, max=3499.333333333333, /nFwd Packet Length Std (type: float64), missing=0, unique=866, mean=26.125329702816583, std=116.94789680362227, min=0.0, max=2692.5818228535404, /nBwd Packet Length Max (type: float64), missing=0, unique=358, mean=144.67397260273972, std=472.0829874907438, min=0.0, max=7240.0, /nBwd Packet Length Min (type: float64), missing=0, unique=215, mean=47.270507655116845, std=76.7695120117263, min=0.0, max=2792.0, /nBwd Packet Length Mean (type: float64), missing=0, unique=865, mean=71.34449923161378, std=154.40266848909232, min=0.0, max=3316.307692307693, /nBwd Packet Length Std (type: float64), missing=0, unique=737, mean=34.80804341259947, std=157.61327574183076, min=0.0, max=2002.250733549622, /nFlow Bytes/s (type: float64), missing=0, unique=10438, mean=inf, std=nan, min=0.0, max=inf, /nFlow Packets/s (type: float64), missing=0, unique=11981, mean=inf, std=nan, min=0.0169248196717585, max=inf, /nFlow IAT Mean (type: float64), missing=0, unique=11986, mean=2026371.0536858926, std=5897070.292131087, min=0.0, max=118169649.0, /nFlow IAT Std (type: float64), missing=0, unique=5832, mean=2313972.4892805587, std=6591439.3359070895, min=0.0, max=71063799.46700472, /nFlow IAT Max (type: float64), missing=0, unique=11833, mean=6446451.855278001, std=15692773.571515698, min=0.0, max=119869261.0, /nFlow IAT Min (type: float64), missing=0, unique=9698, mean=699879.6818694602, std=4537055.284188619, min=0.0, max=118169649.0, /nFwd IAT Total (type: float64), missing=0, unique=5797, mean=13350311.438678484, std=30600105.388854355, min=0.0, max=119999976.0, /nFwd IAT Mean (type: float64), missing=0, unique=5806, mean=3132514.2403288856, std=8601892.685102703, min=0.0, max=111976727.0, /nFwd IAT Std (type: float64), missing=0, unique=4300, mean=1838538.4041589603, std=6476497.276687416, min=0.0, max=84804268.03343011, /nFwd IAT Max (type: float64), missing=0, unique=5741, mean=6051668.128525383, std=15228742.124840183, min=0.0, max=119964911.0, /nFwd IAT Min (type: float64), missing=0, unique=4511, mean=1910650.3460112812, std=7658697.644453308, min=0.0, max=111976727.0, /nBwd IAT Total (type: float64), missing=0, unique=3867, mean=8409513.123932313, std=23348230.78472847, min=0.0, max=119997157.0, /nBwd IAT Mean (type: float64), missing=0, unique=3868, mean=2583284.936353013, std=9117687.724684576, min=0.0, max=111981637.0, /nBwd IAT Std (type: float64), missing=0, unique=2870, mean=1109711.5811131955, std=4495260.229720566, min=0.0, max=82120487.37895022, /nBwd IAT Max (type: float64), missing=0, unique=3832, mean=4489045.055519742, std=13103573.31955234, min=0.0, max=119428193.0, /nBwd IAT Min (type: float64), missing=0, unique=2669, mean=1833061.3779210313, std=8698279.887452269, min=0.0, max=111981637.0, /nFwd PSH Flags (type: int64), missing=0, unique=2, mean=0.05414987912973408, std=0.22632233027581888, min=0.0, max=1.0, /nBwd PSH Flags (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nFwd URG Flags (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nBwd URG Flags (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nFwd Header Length (type: int64), missing=0, unique=243, mean=176.08896051571313, std=4254.21962920833, min=0.0, max=332660.0, /nBwd Header Length (type: int64), missing=0, unique=243, mean=144.08412570507656, std=2785.136099881703, min=0.0, max=198816.0, /nFwd Packets/s (type: float64), missing=0, unique=11979, mean=12483.463823217264, std=142835.68515615998, min=0.0, max=3000000.0, /nBwd Packets/s (type: float64), missing=0, unique=10085, mean=603.0658530412678, std=23750.62875173406, min=0.0, max=1000000.0, /nPacket Length Min (type: float64), missing=0, unique=146, mean=36.167929089443994, std=64.38409580566483, min=0.0, max=1448.0, /nPacket Length Max (type: float64), missing=0, unique=455, mean=203.70354552780017, std=674.4380226031224, min=0.0, max=21890.0, /nPacket Length Mean (type: float64), missing=0, unique=1624, mean=71.25049005086753, std=126.19049788214576, min=0.0, max=3309.714285714286, /nPacket Length Std (type: float64), missing=0, unique=1463, mean=54.79140272621526, std=151.53404690157723, min=0.0, max=1922.510893188926, /nPacket Length Variance (type: float64), missing=0, unique=1494, mean=25962.814855323977, std=162987.27943799365, min=0.0, max=3696048.134430082, /nFIN Flag Count (type: int64), missing=0, unique=4, mean=0.19943593875906526, std=0.548214932763386, min=0.0, max=3.0, /nSYN Flag Count (type: int64), missing=0, unique=27, mean=0.73593875906527, std=2.533324853730061, min=0.0, max=29.0, /nRST Flag Count (type: int64), missing=0, unique=3, mean=0.05447219983883964, std=0.2700836618068105, min=0.0, max=2.0, /nPSH Flag Count (type: int64), missing=0, unique=78, mean=1.9389202256244964, std=23.32443934307931, min=0.0, max=1056.0, /nACK Flag Count (type: int64), missing=0, unique=127, mean=9.028767123287672, std=218.91218960763473, min=0.0, max=16608.0, /nURG Flag Count (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nCWR Flag Count (type: int64), missing=0, unique=2, mean=0.0011281224818694602, std=0.03356993641059501, min=0.0, max=1.0, /nECE Flag Count (type: int64), missing=0, unique=3, mean=0.00209508460918614, std=0.0634424449007585, min=0.0, max=2.0, /nDown/Up Ratio (type: float64), missing=0, unique=9, mean=0.7663980660757453, std=0.6351376149742529, min=0.0, max=8.0, /nAverage Packet Size (type: float64), missing=0, unique=1562, mean=89.50227922189384, std=143.27257943486688, min=0.0, max=3564.3076923076924, /nFwd Segment Size Avg (type: float64), missing=0, unique=899, mean=61.45940358196939, std=137.01310677149544, min=0.0, max=3499.333333333333, /nBwd Segment Size Avg (type: float64), missing=0, unique=843, mean=71.34449923161378, std=154.40266848909235, min=0.0, max=3316.3076923076924, /nFwd Bytes/Bulk Avg (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nFwd Packet/Bulk Avg (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nFwd Bulk Rate Avg (type: int64), missing=0, unique=1, mean=0.0, std=0.0, min=0.0, max=0.0, /nBwd Bytes/Bulk Avg (type: int64), missing=0, unique=620, mean=5951.329331184528, std=247175.6572022262, min=0.0, max=19236051.0, /nBwd Packet/Bulk Avg (type: int64), missing=0, unique=78, mean=3.2860596293311843, std=84.00204941315589, min=0.0, max=6214.0, /nBwd Bulk Rate Avg (type: int64), missing=0, unique=1304, mean=16820.980096696214, std=1588773.2098469222, min=0.0, max=176914285.0, /nSubflow Fwd Packets (type: int64), missing=0, unique=96, mean=25.734327155519743, std=479.9630189535263, min=0.0, max=21890.0, /nSubflow Fwd Bytes (type: int64), missing=0, unique=517, mean=217.3344883158743, std=7242.106235200039, min=0.0, max=515005.0, /nSubflow Bwd Packets (type: int64), missing=0, unique=46, mean=0.8009669621273167, std=11.769930273138568, min=0.0, max=994.0, /nSubflow Bwd Bytes (type: int64), missing=0, unique=475, mean=499.51966156325545, std=28609.77033786398, min=0.0, max=3024245.0, /nFWD Init Win Bytes (type: int64), missing=0, unique=401, mean=4124.722159548751, std=12365.514882043084, min=0.0, max=65535.0, /nBwd Init Win Bytes (type: int64), missing=0, unique=387, mean=1825.9176470588236, std=9148.041024652955, min=0.0, max=65535.0, /nFwd Act Data Pkts (type: int64), missing=0, unique=84, mean=3.048348106365834, std=34.30662083781469, min=0.0, max=1269.0, /nFwd Seg Size Min (type: int64), missing=0, unique=8, mean=14.322643029814666, std=10.976572453386462, min=0.0, max=44.0, /nActive Mean (type: float64), missing=0, unique=2382, mean=685012.301947925, std=3230434.2226290843, min=0.0, max=112002913.0, /nActive Std (type: float64), missing=0, unique=999, mean=191133.09367735623, std=1171082.6151405864, min=0.0, max=35540078.48408695, /nActive Max (type: float64), missing=0, unique=2379, mean=900342.6955680903, std=3852892.589801496, min=0.0, max=112002913.0, /nActive Min (type: float64), missing=0, unique=2364, mean=543631.6247381144, std=3021347.1499282657, min=0.0, max=112002913.0, /nIdle Mean (type: float64), missing=0, unique=2685, mean=5350682.332356256, std=14522744.132949939, min=0.0, max=119869261.0, /nIdle Std (type: float64), missing=0, unique=1359, mean=609094.8176052313, std=3587713.2494934895, min=0.0, max=72748830.68393157, /nIdle Max (type: float64), missing=0, unique=2679, mean=6043046.202256245, std=15819922.850502783, min=0.0, max=119869261.0, /nIdle Min (type: float64), missing=0, unique=2673, mean=4879231.676712329, std=14129936.972070845, min=0.0, max=119869261.0, /nLabel (type: object), missing=0, unique=3, mean=N/A, std=N/A, min=N/A, max=N/A, 
+
+Respond ONLY in the following JSON format :
+{
+  "feature_name_1": "justification for feature 1",
+  "feature_name_2": "justification for feature 2",
+  ...
+}
+
+The output MUST be valid JSON. Do NOT include any other text.
+
+
+========================================== LLM-DR ==========================================
+Réponse brute:
+ {
+      "Src IP": "IP address of the sender can indicate the source of the traffic, which is crucial in distinguishing between normal and malicious traffic.",
+      "Flow duration": "Duration of the flow provides insights into the length of interaction, helping to identify anomalies that might suggest malicious activity.",
+      "total Fwd Packet": "Total packets in the forward direction can provide information on data volume sent, which could be indicative of normal or abnormal traffic patterns.",
+      "total Bwd packets": "Total packets in the backward direction give insights into data volume received, another important factor in distinguishing between normal and malicious traffic.",
+      "Fwd Packet Length Mean": "Mean packet size in the forward direction can help identify unusual data sizes that may indicate potential attacks.",
+      "Flow Bytes/s": "Number of flow bytes per second can be used to analyze the data transfer rate, which is significant in detecting abnormal traffic patterns.",
+      "Flow Packets/s": "Number of flow packets per second helps assess the packet rate, providing another dimension for anomaly detection.",
+      "Flow IAT Mean": "Mean time between two packets sent in the flow can help identify unusual intervals that might indicate malicious activity.",
+      "Fwd PSH flags": "Count of packets with PSH flag set in forward direction can signal the presence of important data, helping distinguish normal from abnormal traffic.",
+   }
+
+Temps d'inférence: 479.0876908302307 secondes
+
+Features selectionnés:
+['Src IP', 'Flow duration', 'total Fwd Packet','total Bwd packets','Flow Packets/s','Flow IAT Mean','Fwd PSH flags']
+========================================== Classification Results with Selected Features ==========================================
+Nbr of Selected Features with LLM: 2
+Performance with all features:
+Accuracy: 0.879129734085415
+F1 Score: 0.879151121264883
+ROC AUC: 0.9690994719617243
+
+Performance with selected features:
+Accuracy: 0.9490491539081386
+F1 Score: 0.9322370099638193
+ROC AUC: 0.9873803299295554
+

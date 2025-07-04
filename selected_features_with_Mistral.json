@@ -1,0 +1,9 @@
+[
+"Src IP",
+ "Flow duration", 
+ "total Fwd Packet",
+ "total Bwd packets",
+ "Flow Packets/s",
+ "Flow IAT Mean",
+ "Fwd PSH flags"
+]

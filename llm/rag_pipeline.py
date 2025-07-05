@@ -32,8 +32,15 @@ class RAGPipeline:
 
         # Extraction des features depuis la réponse JSON
         try:
-            features_dict = json.loads(response)
-            features = list(features_dict.keys())
+            # Cherche le premier bloc JSON dans la réponse
+            match = re.search(r"\{[\s\S]*\}", response)
+            if match:
+                json_str = match.group(0)
+                features_dict = json.loads(json_str)
+                features = list(features_dict.keys())
+            else:
+                print("Aucun bloc JSON trouvé dans la réponse du LLM.")
+                features = []
         except Exception as e:
             print("Erreur lors du parsing JSON:", e)
             features = []

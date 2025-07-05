@@ -1,1 +1,1 @@
-model_name = "llama3.2"
+model_names = ["mistral","deepseek-r1:1.5b","llama3.2","nomic-embed-text:"]

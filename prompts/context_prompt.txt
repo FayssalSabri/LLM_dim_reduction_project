@@ -1,4 +1,3 @@
-# Note : Format Markdown du prompt
 You are an expert in feature selection for intrusion detection in IoT data.
 
 Your task is to select a balanced subset of variables that you judge most relevant and informative for predicting the label, as they will be used to train a supervised machine learning classification model. 

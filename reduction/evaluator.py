@@ -4,7 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
 import config
 
-model_name = config.model_name
+model_name = config.model_names
 
 file_path = "./data/Benign_BruteForce_Mirai_balanced.csv"
 from Extract_meta_data import load_data
